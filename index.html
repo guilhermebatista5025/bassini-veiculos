@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bassini Veículos | Carros Seminovos e Usados em Linhares - ES</title>
+  <meta name="description" content="Bassini Veículos revenda de carros seminovos e usados em Linhares e região. Compramos seu carro, fazemos troca e financiamento.">
+  
+  <!-- CSS Link -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ==========================================================================
+       TOP BAR (HORÁRIO DE ATENDIMENTO)
+       ========================================================================== -->
+  <div class="top-header">
+    <div class="container">
+      <div class="top-header-wrapper">
+        <strong class="d-none d-sm-inline">Horário de atendimento:</strong>
+        <span>Seg a Sexta - 8h às 18h | Sábado - 8h às 12h</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       HEADER & NAVIGATION
+       ========================================================================== -->
+  <header class="header">
+    <div class="container">
+      <nav class="navbar">
+        <a href="#home" class="logo">
+          <!-- Scalable Emblem based on Brand Monogram BV -->
+          <svg class="logo-icon" viewBox="0 0 160 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M30 85H75C95 85 105 73.5 101.5 59.5C99.5 51.5 93 46 84 43.5C92.5 41 97.5 33.5 94.5 22.5C91.5 11.5 78.5 7 59.5 7H15L5 85H30ZM28.5 24H54.5C61.5 24 64.5 27 65.5 31.5C66.5 36 63 39 56 39H24.5L28.5 24ZM20.5 54H51.5C58.5 54 62.5 57 63.5 61.5C64.5 66 61.5 70 54.5 70H16.5L20.5 54Z" fill="#162155" />
+            <path d="M35 88L73 7L98 7L59 88H35Z" fill="#c4233a" />
+            <path d="M85 7L73.5 32H48.5L60 7H85Z" fill="#c4233a" />
+          </svg>
+          <div class="logo-text">
+            BASSINI
+            <span>VEÍCULOS</span>
+          </div>
+        </a>
+
+        <!-- Menu -->
+        <ul class="nav-menu" id="nav-menu">
+          <li><a href="#estoque" class="nav-link">Estoque</a></li>
+          <li><a href="#venda-seu-carro" class="nav-link">Venda seu carro</a></li>
+          <li><a href="#financie" class="nav-link">Financie</a></li>
+          <li><a href="#diferenciais" class="nav-link">Sobre</a></li>
+          <li><a href="#contato" class="nav-link">Contato</a></li>
+        </ul>
+
+        <!-- Contact Links right side -->
+        <div class="nav-contact-block">
+          <a href="tel:+5527999999999" class="phone-link">
+            <svg class="phone-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
+              <path d="M17.346-14.885l-3.656-.844a.849.849,0,0,0-.967.489L11.036-11.3a.842.842,0,0,0,.243.984l2.13,1.744a13.029,13.029,0,0,1-6.23,6.23L5.435-4.475a.843.843,0,0,0-.984-.243L.513-3.03a.854.854,0,0,0-.492.97L.865,1.6a.843.843,0,0,0,.823.654A16.311,16.311,0,0,0,18-14.062.843.843,0,0,0,17.346-14.885Z" transform="translate(0 15.75)" fill="currentColor"/>
+            </svg>
+            <span class="d-none d-lg-inline">(27) 99999-9999</span>
+          </a>
+          <a href="https://wa.me/5527999999999" target="_blank" class="nav-wpp-btn">
+            <svg style="width: 18px; height: 18px;" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.035-4.135l.386.23c1.606.953 3.605 1.459 5.619 1.46h.005c5.626 0 10.201-4.577 10.204-10.205.002-2.727-1.059-5.29-2.99-7.222C17.385 2.196 14.825 1.13 12.1 1.127 6.474 1.127 1.897 5.705 1.894 11.334c-.001 1.919.506 3.794 1.466 5.422l.252.428L2.61 20.35l3.482-1.09.398-.242zM17.382 14.23c-.29-.145-1.716-.848-1.98-.943-.266-.096-.459-.145-.652.145-.193.29-.748.943-.918 1.137-.168.193-.338.217-.628.072-.29-.145-1.226-.452-2.336-1.442-.864-.771-1.447-1.723-1.616-2.014-.17-.29-.018-.447.127-.59.13-.13.29-.338.435-.508.145-.17.193-.29.29-.483.096-.193.048-.362-.024-.508-.072-.145-.652-1.573-.894-2.153-.236-.57-.475-.49-.652-.49-.168-.008-.362-.01-.556-.01-.193 0-.507.072-.772.362-.266.29-1.014.992-1.014 2.418 0 1.425 1.038 2.802 1.182 2.995.145.193 2.043 3.12 4.948 4.373.69.298 1.23.476 1.65.61.693.22 1.324.19 1.823.115.556-.084 1.716-.7 1.957-1.378.24-.677.24-1.257.17-1.377-.072-.12-.266-.193-.556-.338z"/>
+            </svg>
+            <span class="d-none d-md-inline">WhatsApp</span>
+          </a>
+        </div>
+
+        <!-- Mobile Toggle Button -->
+        <button class="mobile-toggle" id="mobile-toggle" aria-label="Menu de Navegação">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ==========================================================================
+       HERO BANNER (LARGO / ESTILO SLIDER)
+       ========================================================================== -->
+  <section id="home" class="hero-banner">
+    <img src="assets/hero.png" alt="Sua próxima conquista está aqui - Bassini Veículos" class="hero-banner-img">
+    <div class="hero-banner-overlay">
+      <div class="container">
+        <div class="hero-banner-content">
+          <h2>Sua próxima conquista está aqui</h2>
+          <p>Novos e seminovos de procedência garantida e as melhores taxas do mercado.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mobile Navigation Shortcut Buttons -->
+  <div class="container mobile-shortcuts d-md-none">
+    <div class="row">
+      <div class="col">
+        <a href="#estoque" class="btn btn-primary btn-full">Estoque</a>
+      </div>
+      <div class="col">
+        <a href="#venda-seu-carro" class="btn btn-secondary btn-full">Vender</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       SEARCH BAR & BRAND FILTER
+       ========================================================================== -->
+  <section class="search-section">
+    <div class="container">
+      <div class="search-row py-4">
+        <!-- Text Input Search -->
+        <div class="search-form-col">
+          <form class="search-form" id="searchForm" onsubmit="event.preventDefault();">
+            <label for="term">Qual veículo você está buscando?</label>
+            <div class="search-input-group">
+              <input type="text" id="term" class="form-control" placeholder="Marca ou modelo">
+              <button class="btn btn-primary" type="submit" id="submit-search" aria-label="Pesquisar">
+                <svg class="search-lupa" viewBox="0 0 30 30">
+                  <path d="M14.795,1.969,7.236-5.59a.7.7,0,0,0-.5-.205h-.6a12.134,12.134,0,0,0,3.24-8.268A12.186,12.186,0,0,0-2.813-26.25,12.186,12.186,0,0,0-15-14.062,12.186,12.186,0,0,0-2.813-1.875,12.156,12.156,0,0,0,5.455-5.109v.6a.721.721,0,0,0,.205.5l7.559,7.559a.7.7,0,0,0,1,0l.58-.58A.7.7,0,0,0,14.795,1.969ZM-2.813-3.75A10.305,10.305,0,0,1-13.125-14.062,10.305,10.305,0,0,1-2.813-24.375,10.305,10.305,0,0,1,7.5-14.062,10.305,10.305,0,0,1-2.813-3.75Z" transform="translate(15 26.25)" fill="currentColor"></path>
+                </svg>
+              </button>
+            </div>
+          </form>
+        </div>
+        <!-- Ver Todo Estoque Desktop -->
+        <div class="all-stock-col d-none d-md-flex">
+          <a class="btn btn-secondary" href="#estoque" id="view-all-stock-btn">Ver todo estoque</a>
+        </div>
+      </div>
+
+      <!-- Brands Grid (Menelli-style com logos reais) -->
+      <div class="brands-container py-3">
+        <div class="brands-list">
+          <a class="brand-link" href="#estoque" data-brand="Audi">
+            <img src="https://static.autoconf.com.br/marcas/audi.png" alt="Audi" width="50" height="50">
+            <small>Audi</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="BMW">
+            <img src="https://static.autoconf.com.br/marcas/bmw.png" alt="BMW" width="50" height="50">
+            <small>BMW</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Chevrolet">
+            <img src="https://static.autoconf.com.br/marcas/gm-chevrolet.png" alt="Chevrolet" width="50" height="50">
+            <small>Chevrolet</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Fiat">
+            <img src="https://static.autoconf.com.br/marcas/fiat.png" alt="Fiat" width="50" height="50">
+            <small>Fiat</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Ford">
+            <img src="https://static.autoconf.com.br/marcas/ford.png" alt="Ford" width="50" height="50">
+            <small>Ford</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Honda">
+            <img src="https://static.autoconf.com.br/marcas/honda.png" alt="Honda" width="50" height="50">
+            <small>Honda</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Hyundai">
+            <img src="https://static.autoconf.com.br/marcas/hyundai.png" alt="Hyundai" width="50" height="50">
+            <small>Hyundai</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Jeep">
+            <img src="https://static.autoconf.com.br/marcas/jeep.png" alt="Jeep" width="50" height="50">
+            <small>Jeep</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Renault">
+            <img src="https://static.autoconf.com.br/marcas/renault.png" alt="Renault" width="50" height="50">
+            <small>Renault</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Toyota">
+            <img src="https://static.autoconf.com.br/marcas/toyota.png" alt="Toyota" width="50" height="50">
+            <small>Toyota</small>
+          </a>
+          <a class="brand-link" href="#estoque" data-brand="Volkswagen">
+            <img src="https://static.autoconf.com.br/marcas/volkswagen.png" alt="Volkswagen" width="50" height="50">
+            <small>Volkswagen</small>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       VEHICLE STOCK (ESTOQUE)
+       ========================================================================== -->
+  <section id="estoque" class="stock section-padding">
+    <div class="container">
+      <h2 class="section-title text-center py-5">Últimas novidades</h2>
+      
+      <!-- Category Capsules (Synced with Menelli sub-controls or simplified) -->
+      <div class="stock-capsules-wrapper mb-4">
+        <ul class="filter-tags">
+          <li><button class="filter-tag active" data-filter="all">Todos</button></li>
+          <li><button class="filter-tag" data-filter="suv">SUVs</button></li>
+          <li><button class="filter-tag" data-filter="sedan">Sedans</button></li>
+          <li><button class="filter-tag" data-filter="picape">Picapes</button></li>
+        </ul>
+      </div>
+
+      <!-- Car Grid -->
+      <div class="car-grid" id="car-grid">
+        <!-- Populated dynamically by script.js in Menelli Card Format -->
+      </div>
+
+      <div class="text-center py-5">
+        <button class="btn btn-secondary" id="see-all-novidades-btn">Veja todas as novidades</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       DOUBLE CTAS: VENDA SEU CARRO & FINANCIE
+       ========================================================================== -->
+  <section class="home-cards-section py-5">
+    <div class="container">
+      <div class="home-cards-row">
+        <!-- Venda seu Carro (8-cols style) -->
+        <div id="venda-seu-carro" class="card-home-col-8">
+          <div class="card card-home">
+            <div class="card-body">
+              <div class="card-text-container">
+                <h4>Venda seu Carro</h4>
+                <p>Solicite a avaliação do seu carro online, no conforto da sua casa.</p>
+                <a href="#contato" class="btn btn-primary">Avalie agora</a>
+              </div>
+              <div class="card-image-decoration d-none d-md-block">
+                <img src="assets/instagram_1.png" alt="Venda seu carro na Bassini Veículos">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Financie seu sonho (4-cols style) -->
+        <div id="financie" class="card-home-col-4">
+          <div class="card card-home bg-red-accent">
+            <div class="card-body flex-column justify-content-between">
+              <div>
+                <h4>Financie seu sonho</h4>
+                <p>Trabalhamos com as principais financeiras do país, garantindo as melhores taxas para você!</p>
+              </div>
+              <a href="#contato" class="btn btn-secondary w-100 mt-4">Faça uma simulação</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       ADVANTAGES (DIFERENCIAIS)
+       ========================================================================== -->
+  <section id="diferenciais" class="advantages section-padding">
+    <div class="container">
+      <div class="section-header">
+        <span class="badge">Diferenciais</span>
+        <h2>Por que escolher a Bassini Veículos?</h2>
+        <p>Garantimos a melhor negociação de seminovos em Linhares com transparência de ponta a ponta.</p>
+      </div>
+
+      <div class="advantages-grid">
+        <div class="advantage-card">
+          <div class="advantage-icon-wrapper">
+            <svg class="advantage-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+            </svg>
+          </div>
+          <h3 class="advantage-title">Laudo Cautelar Aprovado</h3>
+          <p class="advantage-description">Todos os nossos veículos têm procedência garantida e laudo de vistoria cautelar aprovado.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="advantage-icon-wrapper">
+            <svg class="advantage-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <h3 class="advantage-title">Melhor Avaliação da Região</h3>
+          <p class="advantage-description">Avaliamos seu veículo usado com transparência, garantindo as melhores condições para a sua troca.</p>
+        </div>
+
+        <div class="advantage-card">
+          <div class="advantage-icon-wrapper">
+            <svg class="advantage-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+            </svg>
+          </div>
+          <h3 class="advantage-title">Financiamento Facilitado</h3>
+          <p class="advantage-description">Crédito aprovado na hora através das maiores financeiras, com taxas reduzidas e prazos sob medida.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       SOCIAL MEDIA (REDES SOCIAIS)
+       ========================================================================== -->
+  <section class="socials-section py-5">
+    <div class="container text-center">
+      <h3 class="socials-title">Nossas redes sociais</h3>
+      <a href="https://www.instagram.com/bassiniveiculos/" title="Confira nosso Instagram" class="instagram-link" target="_blank" rel="noopener noreferrer">
+        <svg class="instagram-color-icon" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+      </a>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       CONTACT FORM (FORME INTEGRADO EM CONTATO)
+       ========================================================================== -->
+  <section id="contato" class="contact-form-section py-5">
+    <div class="container">
+      <div class="contact-form-card">
+        <h3>Envie uma Mensagem</h3>
+        <p>Tem interesse em algum veículo ou quer fazer uma simulação de financiamento? Fale conosco!</p>
+        <form id="contact-form" class="contact-form">
+          <div class="form-group">
+            <label for="client-name">Nome Completo *</label>
+            <input type="text" id="client-name" class="form-control" placeholder="Seu nome completo" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="client-phone">WhatsApp *</label>
+              <input type="tel" id="client-phone" class="form-control" placeholder="(27) 99999-9999" required>
+            </div>
+            <div class="form-group">
+              <label for="client-email">E-mail *</label>
+              <input type="email" id="client-email" class="form-control" placeholder="seuemail@provedor.com" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="client-message">Sua Mensagem *</label>
+            <textarea id="client-message" class="form-control" placeholder="Tenho interesse no veículo e gostaria de saber as condições de financiamento..." required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-full">Enviar Proposta</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       FOOTER (ESTILO MENELLI: MAPA 50% / INFORMAÇÕES 50%)
+       ========================================================================== -->
+  <footer class="footer">
+    <div class="container-fluid p-0">
+      <div class="footer-row">
+        <!-- Left Column: Google Map -->
+        <div class="footer-map-col">
+          <iframe title="Mapa Bassini Veículos" class="footer-map-iframe" src="https://maps.google.com/maps?q=Av.+Prefeito+Samuel+Batista+Cruz,+4110+-+Linhares+-+ES&amp;output=embed" style="border:0" loading="lazy" allowfullscreen></iframe>
+        </div>
+
+        <!-- Right Column: Business Info -->
+        <div class="footer-info-col">
+          <div class="footer-info-wrapper">
+            <h3 class="footer-info-title">Bassini Veículos</h3>
+            
+            <!-- Address link -->
+            <a href="https://www.google.com/maps?q=Av.+Prefeito+Samuel+Batista+Cruz,+4110+-+Linhares+-+ES" target="_blank" rel="noopener" class="footer-info-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="footer-info-svg" viewBox="0 0 15 20">
+                <path d="M6.729,2.1a.938.938,0,0,0,1.542,0C13.946-6.132,15-6.976,15-10a7.5,7.5,0,0,0-7.5-7.5A7.5,7.5,0,0,0,0-10C0-6.976,1.054-6.132,6.729,2.1ZM7.5-6.875A3.125,3.125,0,0,1,4.375-10,3.125,3.125,0,0,1,7.5-13.125,3.125,3.125,0,0,1,10.625-10,3.125,3.125,0,0,1,7.5-6.875Z" transform="translate(0 17.5)" fill="currentColor"/>
+              </svg>
+              Av. Prefeito Samuel Cruz, 4110 - J. Rodrigues Maciel - Linhares/ES
+            </a>
+
+            <!-- Phone Link -->
+            <a href="tel:+5527999999999" target="_blank" rel="noopener" class="footer-info-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="footer-info-svg" viewBox="0 0 18 18">
+                <path d="M17.346-14.885l-3.656-.844a.849.849,0,0,0-.967.489L11.036-11.3a.842.842,0,0,0,.243.984l2.13,1.744a13.029,13.029,0,0,1-6.23,6.23L5.435-4.475a.843.843,0,0,0-.984-.243L.513-3.03a.854.854,0,0,0-.492.97L.865,1.6a.843.843,0,0,0,.823.654A16.311,16.311,0,0,0,18-14.062.843.843,0,0,0,17.346-14.885Z" transform="translate(0 15.75)" fill="currentColor"/>
+              </svg>
+              (27) 99999-9999
+            </a>
+
+            <!-- WhatsApp Link -->
+            <a href="https://wa.me/5527999999999" target="_blank" rel="noopener" class="footer-info-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="footer-info-svg" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.035-4.135l.386.23c1.606.953 3.605 1.459 5.619 1.46h.005c5.626 0 10.201-4.577 10.204-10.205.002-2.727-1.059-5.29-2.99-7.222C17.385 2.196 14.825 1.13 12.1 1.127 6.474 1.127 1.897 5.705 1.894 11.334c-.001 1.919.506 3.794 1.466 5.422l.252.428L2.61 20.35l3.482-1.09.398-.242zM17.382 14.23c-.29-.145-1.716-.848-1.98-.943-.266-.096-.459-.145-.652.145-.193.29-.748.943-.918 1.137-.168.193-.338.217-.628.072-.29-.145-1.226-.452-2.336-1.442-.864-.771-1.447-1.723-1.616-2.014-.17-.29-.018-.447.127-.59.13-.13.29-.338.435-.508.145-.17.193-.29.29-.483.096-.193.048-.362-.024-.508-.072-.145-.652-1.573-.894-2.153-.236-.57-.475-.49-.652-.49-.168-.008-.362-.01-.556-.01-.193 0-.507.072-.772.362-.266.29-1.014.992-1.014 2.418 0 1.425 1.038 2.802 1.182 2.995.145.193 2.043 3.12 4.948 4.373.69.298 1.23.476 1.65.61.693.22 1.324.19 1.823.115.556-.084 1.716-.7 1.957-1.378.24-.677.24-1.257.17-1.377-.072-.12-.266-.193-.556-.338z"/>
+              </svg>
+              (27) 99999-9999
+            </a>
+
+            <!-- Mail Link -->
+            <a href="mailto:contato@bassiniveiculos.com.br" class="footer-info-link">
+              <svg xmlns="http://www.w3.org/2000/svg" class="footer-info-svg" viewBox="0 0 20 15">
+                <path d="M19.621-10.047c-.875.68-2.031,1.547-6.016,4.441-.793.578-2.211,1.871-3.605,1.859C8.613-3.738,7.223-5,6.4-5.605,2.414-8.5,1.254-9.363.379-10.043A.234.234,0,0,0,0-9.859v7.984A1.875,1.875,0,0,0,1.875,0h16.25A1.875,1.875,0,0,0,20-1.875V-9.863A.235.235,0,0,0,19.621-10.047ZM10-5c.906.016,2.211-1.141,2.867-1.617,5.184-3.762,5.578-4.09,6.773-5.027A.935.935,0,0,0,20-12.383v-.742A1.875,1.875,0,0,0,18.125-15H1.875A1.875,1.875,0,0,0,0-13.125v.742a.941.941,0,0,0,.359.738c1.2.934,1.59,1.266,6.773,5.027C7.789-6.141,9.094-4.984,10-5Z" transform="translate(0 15)" fill="currentColor"/>
+              </svg>
+              contato@bassiniveiculos.com.br
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Copyright Row -->
+    <div class="bottom-footer">
+      <div class="container">
+        <div class="bottom-footer-row">
+          <div class="bottom-copy">
+            <small>&copy; 2026 Bassini Veículos. Todos os direitos reservados.</small>
+          </div>
+          <div class="bottom-links">
+            <a href="#estoque">Estoque</a>
+            <a href="#venda-seu-carro">Vender</a>
+            <a href="#financie">Financiar</a>
+          </div>
+          <div class="bottom-logo">
+            <small>CNPJ: 41.039.183/0001-36</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       FLOATING WHATSAPP BUTTON (ESTILO MENELLI)
+       ========================================================================== -->
+  <a href="https://wa.me/5527999999999" target="_blank" rel="nofollow" class="float-wpp" aria-label="Chamar no WhatsApp">
+    <svg style="width: 30px; height: 30px;" fill="currentColor" viewBox="0 0 24 24">
+      <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.035-4.135l.386.23c1.606.953 3.605 1.459 5.619 1.46h.005c5.626 0 10.201-4.577 10.204-10.205.002-2.727-1.059-5.29-2.99-7.222C17.385 2.196 14.825 1.13 12.1 1.127 6.474 1.127 1.897 5.705 1.894 11.334c-.001 1.919.506 3.794 1.466 5.422l.252.428L2.61 20.35l3.482-1.09.398-.242zM17.382 14.23c-.29-.145-1.716-.848-1.98-.943-.266-.096-.459-.145-.652.145-.193.29-.748.943-.918 1.137-.168.193-.338.217-.628.072-.29-.145-1.226-.452-2.336-1.442-.864-.771-1.447-1.723-1.616-2.014-.17-.29-.018-.447.127-.59.13-.13.29-.338.435-.508.145-.17.193-.29.29-.483.096-.193.048-.362-.024-.508-.072-.145-.652-1.573-.894-2.153-.236-.57-.475-.49-.652-.49-.168-.008-.362-.01-.556-.01-.193 0-.507.072-.772.362-.266.29-1.014.992-1.014 2.418 0 1.425 1.038 2.802 1.182 2.995.145.193 2.043 3.12 4.948 4.373.69.298 1.23.476 1.65.61.693.22 1.324.19 1.823.115.556-.084 1.716-.7 1.957-1.378.24-.677.24-1.257.17-1.377-.072-.12-.266-.193-.556-.338z"/>
+    </svg>
+  </a>
+
+  <!-- ==========================================================================
+       MODAL (DETALHES DO VEÍCULO)
+       ========================================================================== -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-container">
+      <!-- Populated dynamically by script.js -->
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       TOAST NOTIFICATION (FEEDBACK VISUAL)
+       ========================================================================== -->
+  <div class="toast" id="toast">
+    <svg class="toast-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+    <div class="toast-content">
+      <h4>Sucesso!</h4>
+      <p>Sua ação foi executada.</p>
+    </div>
+  </div>
+
+  <!-- JS Link -->
+  <script src="script.js"></script>
+</body>
+</html>
