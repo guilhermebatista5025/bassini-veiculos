@@ -373,7 +373,7 @@ img {
 .hero-banner {
   position: relative;
   width: 100%;
-  height: 450px;
+  height: 580px;
   overflow: hidden;
   background-color: var(--primary-navy);
 }
@@ -583,7 +583,7 @@ img {
 }
 
 .section-title {
-  font-size: 2.2rem;
+  font-size: 2.6rem;
   text-transform: uppercase;
   letter-spacing: -0.01em;
   color: var(--primary-navy);
@@ -630,7 +630,7 @@ img {
 /* Car Grid */
 .car-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
   gap: 30px;
   margin-top: 40px;
 }

@@ -55,25 +55,8 @@ const vehicles = [
     category: "picape",
     featured: true,
     brandLogoUrl: "https://static.autoconf.com.br/marcas/toyota.png"
-  },
-  {
-    id: 4,
-    brand: "Honda",
-    model: "Civic",
-    version: "1.5 Touring Turbo CVT",
-    year: "2021/2021",
-    km: "28.000 km",
-    gearbox: "Automático",
-    fuel: "Gasolina",
-    color: "Preto Cristal",
-    plateEnd: "1",
-    description: "O mais desejado da categoria. Versão Touring equipada com o potente e econômico motor 1.5 Turbo de 173cv. Possui teto solar elétrico, conjunto óptico Full LED, LaneWatch (câmera de ponto cego no retrovisor), sistema de som premium com 10 alto-falantes e carregamento de celular por indução. Procedência impecável.",
-    price: 147900,
-    image: "assets/civic.png",
-    category: "sedan",
-    featured: true,
-    brandLogoUrl: "https://static.autoconf.com.br/marcas/honda.png"
   }
+
 ];
 
 // WhatsApp Configs
