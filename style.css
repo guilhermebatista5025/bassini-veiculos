@@ -232,32 +232,30 @@ img {
    HEADER / NAVBAR
    ========================================================================== */
 .header {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 100;
-  background-color: var(--primary-navy);
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  box-shadow: 0 2px 8px rgba(12,25,44,0.15);
+  height: 80px;
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
 }
 
 .navbar {
+  height: 80px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 0;
+  padding: 0;
 }
 
 .logo {
+  height: 100%;
   display: flex;
   align-items: center;
-  gap: 12px;
 }
 
-.logo-icon {
-  width: 48px;
-  height: 36px;
+.logo-img {
+  max-height: 110px; /* ajuste conforme desejar */
+  width: auto;
+  margin-top: 10px;
+  display: block;
 }
 
 .logo-text {
@@ -266,7 +264,7 @@ img {
   font-size: 1.5rem;
   font-style: italic;
   letter-spacing: -0.03em;
-  color: var(--text-white);
+  color: var(--primary-navy);
   line-height: 1;
   display: flex;
   flex-direction: column;
@@ -293,14 +291,14 @@ img {
   font-family: var(--font-headings);
   font-weight: 600;
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.85);
+  color: var(--primary-navy);
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: #ffffff;
+  color: var(--primary-red);
 }
 
 /* Contact Block in Navbar */
@@ -314,14 +312,14 @@ img {
   display: flex;
   align-items: center;
   gap: 8px;
-  color: rgba(255,255,255,0.9);
+  color: var(--primary-navy);
   font-weight: 700;
   font-family: var(--font-headings);
   font-size: 0.95rem;
 }
 
 .phone-link:hover {
-  color: #ffffff;
+  color: var(--primary-red);
 }
 
 .phone-svg {
@@ -364,7 +362,7 @@ img {
   display: block;
   width: 100%;
   height: 2px;
-  background-color: rgba(255,255,255,0.9);
+  background-color: var(--primary-navy);
   border-radius: var(--radius-full);
   transition: var(--transition-normal);
 }
