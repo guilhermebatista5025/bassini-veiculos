@@ -31,22 +31,6 @@
           <li><a href="#contato" class="nav-link">Contato</a></li>
         </ul>
 
-        <!-- Contact Links right side -->
-        <div class="nav-contact-block">
-          <a href="tel:+5527999999999" class="phone-link">
-            <svg class="phone-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18">
-              <path d="M17.346-14.885l-3.656-.844a.849.849,0,0,0-.967.489L11.036-11.3a.842.842,0,0,0,.243.984l2.13,1.744a13.029,13.029,0,0,1-6.23,6.23L5.435-4.475a.843.843,0,0,0-.984-.243L.513-3.03a.854.854,0,0,0-.492.97L.865,1.6a.843.843,0,0,0,.823.654A16.311,16.311,0,0,0,18-14.062.843.843,0,0,0,17.346-14.885Z" transform="translate(0 15.75)" fill="currentColor"/>
-            </svg>
-            <span class="d-none d-lg-inline">(27) 99999-9999</span>
-          </a>
-          <a href="https://wa.me/5527999999999" target="_blank" class="nav-wpp-btn">
-            <svg style="width: 18px; height: 18px;" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.455L0 24zm6.035-4.135l.386.23c1.606.953 3.605 1.459 5.619 1.46h.005c5.626 0 10.201-4.577 10.204-10.205.002-2.727-1.059-5.29-2.99-7.222C17.385 2.196 14.825 1.13 12.1 1.127 6.474 1.127 1.897 5.705 1.894 11.334c-.001 1.919.506 3.794 1.466 5.422l.252.428L2.61 20.35l3.482-1.09.398-.242zM17.382 14.23c-.29-.145-1.716-.848-1.98-.943-.266-.096-.459-.145-.652.145-.193.29-.748.943-.918 1.137-.168.193-.338.217-.628.072-.29-.145-1.226-.452-2.336-1.442-.864-.771-1.447-1.723-1.616-2.014-.17-.29-.018-.447.127-.59.13-.13.29-.338.435-.508.145-.17.193-.29.29-.483.096-.193.048-.362-.024-.508-.072-.145-.652-1.573-.894-2.153-.236-.57-.475-.49-.652-.49-.168-.008-.362-.01-.556-.01-.193 0-.507.072-.772.362-.266.29-1.014.992-1.014 2.418 0 1.425 1.038 2.802 1.182 2.995.145.193 2.043 3.12 4.948 4.373.69.298 1.23.476 1.65.61.693.22 1.324.19 1.823.115.556-.084 1.716-.7 1.957-1.378.24-.677.24-1.257.17-1.377-.072-.12-.266-.193-.556-.338z"/>
-            </svg>
-            <span class="d-none d-md-inline">WhatsApp</span>
-          </a>
-        </div>
-
         <!-- Mobile Toggle Button -->
         <button class="mobile-toggle" id="mobile-toggle" aria-label="Menu de Navegação">
           <span></span>
@@ -191,51 +175,33 @@
   </section>
 
   <!-- ==========================================================================
-       DOUBLE CTAS: VENDA SEU CARRO & FINANCIE
+       SECTION: VENDA SEU CARRO
        ========================================================================== -->
-  <section class="home-cards-section py-5">
+  <section id="venda-seu-carro" class="card-home" style="border-radius: 0; border-left: none; border-right: none;">
     <div class="container">
-      <div class="home-cards-row">
-        <!-- Venda seu Carro (8-cols style) -->
-        <div id="venda-seu-carro" class="card-home-col-8">
-          <div class="card card-home">
-            <div class="card-body">
-              <div class="card-text-container">
-                <h4>Venda seu Carro</h4>
-                <p>Solicite a avaliação do seu carro online, no conforto da sua casa.</p>
-                <a href="#contato" class="btn btn-primary">Avalie agora</a>
-              </div>
-              <div class="card-image-decoration d-none d-md-block">
-                <img src="assets/instagram_1.png" alt="Venda seu carro na Bassini Veículos">
-              </div>
-            </div>
-          </div>
+      <div class="card-body" style="min-height: 400px; padding: 60px 0;">
+        <div class="card-text-container">
+          <h4 style="font-size: 2.5rem;">Venda seu Carro</h4>
+          <p style="font-size: 1.1rem; max-width: 500px;">Solicite a avaliação do seu carro online, no conforto da sua casa. Nossa equipe garante a melhor cotação da região com pagamento à vista.</p>
+          <a href="#contato" class="btn btn-primary mt-4" style="padding: 14px 32px; font-size: 1.1rem;">Avalie agora</a>
         </div>
-
-        <!-- Financie seu sonho (4-cols style) -->
-        <div id="financie" class="card-home-col-4">
-          <div class="card card-home bg-red-accent">
-            <div class="card-body flex-column justify-content-between">
-              <div>
-                <h4>Financie seu sonho</h4>
-                <p>Trabalhamos com as principais financeiras do país, garantindo as melhores taxas para você!</p>
-              </div>
-              <a href="#contato" class="btn btn-secondary w-100 mt-4">Faça uma simulação</a>
-            </div>
-          </div>
+        <div class="card-image-decoration d-none d-md-block" style="width: 45%;">
+          <img src="assets/instagram_1.png" alt="Venda seu carro na Bassini Veículos">
         </div>
       </div>
     </div>
   </section>
+
+
 
   <!-- ==========================================================================
        ADVANTAGES (DIFERENCIAIS)
        ========================================================================== -->
   <section id="diferenciais" class="advantages section-padding">
     <div class="container">
-      <div class="section-header">
-        <span class="badge">Diferenciais</span>
-        <h2>Por que escolher a Bassini Veículos?</h2>
+      <div class="section-header" style="margin-bottom: 40px;">
+        <span class="badge" style="margin-bottom: 16px; display: inline-block;">Diferenciais</span>
+        <h2 style="margin-bottom: 16px;">Por que escolher a Bassini Veículos?</h2>
         <p>Garantimos a melhor negociação de seminovos em Linhares com transparência de ponta a ponta.</p>
       </div>
 
@@ -274,52 +240,21 @@
   </section>
 
   <!-- ==========================================================================
-       SOCIAL MEDIA (REDES SOCIAIS)
+       SECTION: FINANCIE SEU SONHO (Movido para o lugar das Redes Sociais)
        ========================================================================== -->
-  <section class="socials-section py-5">
-    <div class="container text-center">
-      <h3 class="socials-title">Nossas redes sociais</h3>
-      <a href="https://www.instagram.com/bassiniveiculos/" title="Confira nosso Instagram" class="instagram-link" target="_blank" rel="noopener noreferrer">
-        <svg class="instagram-color-icon" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.051.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
-        </svg>
-      </a>
-    </div>
-  </section>
-
-  <!-- ==========================================================================
-       CONTACT FORM (FORME INTEGRADO EM CONTATO)
-       ========================================================================== -->
-  <section id="contato" class="contact-form-section py-5">
+  <section id="financie" class="card-home bg-red-accent" style="border-radius: 0; border-left: none; border-right: none;">
     <div class="container">
-      <div class="contact-form-card">
-        <h3>Envie uma Mensagem</h3>
-        <p>Tem interesse em algum veículo ou quer fazer uma simulação de financiamento? Fale conosco!</p>
-        <form id="contact-form" class="contact-form">
-          <div class="form-group">
-            <label for="client-name">Nome Completo *</label>
-            <input type="text" id="client-name" class="form-control" placeholder="Seu nome completo" required>
-          </div>
-          <div class="form-row">
-            <div class="form-group">
-              <label for="client-phone">WhatsApp *</label>
-              <input type="tel" id="client-phone" class="form-control" placeholder="(27) 99999-9999" required>
-            </div>
-            <div class="form-group">
-              <label for="client-email">E-mail *</label>
-              <input type="email" id="client-email" class="form-control" placeholder="seuemail@provedor.com" required>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="client-message">Sua Mensagem *</label>
-            <textarea id="client-message" class="form-control" placeholder="Tenho interesse no veículo e gostaria de saber as condições de financiamento..." required></textarea>
-          </div>
-          <button type="submit" class="btn btn-primary btn-full">Enviar Proposta</button>
-        </form>
+      <div class="card-body" style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; padding: 60px 0; min-height: 350px;">
+        <div style="flex: 1; min-width: 300px; margin-right: 40px; position: relative; z-index: 2;">
+          <h4 style="font-size: 2.5rem; margin-bottom: 16px;">Financie seu sonho</h4>
+          <p style="font-size: 1.1rem; max-width: 700px; margin-bottom: 0;">Trabalhamos com as principais financeiras do país, garantindo as melhores taxas e aprovação de crédito rápida para você sair de carro novo hoje mesmo!</p>
+        </div>
+        <div style="margin-top: 20px; position: relative; z-index: 2;">
+          <a href="https://wa.me/5527999999999?text=Olá! Gostaria de fazer uma simulação de financiamento." target="_blank" class="btn btn-secondary" style="padding: 16px 40px; font-size: 1.15rem; white-space: nowrap;">Fazer Simulação pelo WhatsApp</a>
+        </div>
       </div>
     </div>
   </section>
-
   <!-- ==========================================================================
        FOOTER (ESTILO MENELLI: MAPA 50% / INFORMAÇÕES 50%)
        ========================================================================== -->
@@ -334,7 +269,7 @@
         <!-- Right Column: Business Info -->
         <div class="footer-info-col">
           <div class="footer-info-wrapper">
-            <h3 class="footer-info-title">Bassini Veículos</h3>
+            <img src="assets/Bassini.png" alt="" width="200px">
             
             <!-- Address link -->
             <a href="https://www.google.com/maps?q=Av.+Prefeito+Samuel+Batista+Cruz,+4110+-+Linhares+-+ES" target="_blank" rel="noopener" class="footer-info-link">
