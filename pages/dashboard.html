@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Bassini Veículos</title>
+  <meta name="robots" content="noindex, nofollow">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Dashboard CSS -->
+  <link rel="stylesheet" href="../styles/dashboard.css">
+</head>
+<body>
+
+  <!-- =============================================
+       SIDEBAR
+       ============================================= -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <img src="../assets/Bassini-branca-transparente.png" alt="Bassini Veículos" class="sidebar-logo">
+      <button class="sidebar-close" id="sidebar-close" aria-label="Fechar menu">
+        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+          <path d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-group">
+        <span class="nav-group-label">Principal</span>
+        <a href="#overview" class="nav-item active" data-section="overview">
+          <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+          </svg>
+          Visão Geral
+        </a>
+        <a href="#estoque" class="nav-item" data-section="estoque">
+          <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+          </svg>
+          Estoque
+        </a>
+        <a href="#leads" class="nav-item" data-section="leads">
+          <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0"/>
+          </svg>
+          Leads
+        </a>
+        <a href="#analytics" class="nav-item" data-section="analytics">
+          <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+          </svg>
+          Analytics
+        </a>
+      </div>
+
+      <div class="nav-group">
+        <span class="nav-group-label">Site</span>
+        <a href="../index.html" class="nav-item" target="_blank">
+          <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/>
+          </svg>
+          Ver Site
+        </a>
+        <a href="estoque.html" class="nav-item" target="_blank">
+          <svg class="nav-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+          </svg>
+          Ver Estoque
+        </a>
+      </div>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-user">
+        <div class="user-avatar">GB</div>
+        <div class="user-info">
+          <span class="user-name">Administrador</span>
+          <span class="user-role">Bassini Veículos</span>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- =============================================
+       MAIN CONTENT
+       ============================================= -->
+  <div class="main-wrapper">
+
+    <!-- TOP HEADER -->
+    <header class="dash-header">
+      <div class="dash-header-left">
+        <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Abrir menu">
+          <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path d="M4 6h16M4 12h16M4 18h16"/>
+          </svg>
+        </button>
+        <div>
+          <h1 class="dash-title" id="page-title">Visão Geral</h1>
+          <p class="dash-subtitle" id="page-subtitle">Bem-vindo ao painel administrativo</p>
+        </div>
+      </div>
+      <div class="dash-header-right">
+        <div class="header-date" id="current-date"></div>
+        <button class="btn-add-vehicle" id="btn-add-vehicle">
+          <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+          Novo Veículo
+        </button>
+        <div class="notif-btn" title="Notificações">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/>
+          </svg>
+          <span class="notif-badge">3</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- =============================================
+         SECTION: OVERVIEW
+         ============================================= -->
+    <section class="dash-section active" id="section-overview">
+
+      <!-- KPI Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card kpi-blue">
+          <div class="kpi-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5"/>
+            </svg>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">Veículos em Estoque</span>
+            <span class="kpi-value" id="kpi-total-vehicles">0</span>
+            <span class="kpi-delta positive">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+              +2 este mês
+            </span>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-green">
+          <div class="kpi-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">Valor Total do Estoque</span>
+            <span class="kpi-value" id="kpi-total-value">R$ 0</span>
+            <span class="kpi-delta positive">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+              Atualizado agora
+            </span>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-orange">
+          <div class="kpi-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+            </svg>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">Leads (WhatsApp)</span>
+            <span class="kpi-value" id="kpi-leads">47</span>
+            <span class="kpi-delta positive">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M5 10l7-7m0 0l7 7m-7-7v18"/></svg>
+              +12 este mês
+            </span>
+          </div>
+        </div>
+
+        <div class="kpi-card kpi-purple">
+          <div class="kpi-icon-wrap">
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+              <path d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+              <path d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+            </svg>
+          </div>
+          <div class="kpi-content">
+            <span class="kpi-label">Visualizações do Site</span>
+            <span class="kpi-value">1.284</span>
+            <span class="kpi-delta negative">
+              <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M19 14l-7 7m0 0l-7-7m7 7V3"/></svg>
+              -3% vs. mês passado
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts Row -->
+      <div class="charts-grid">
+        <!-- Row 1: Estoque por Categoria (full width) -->
+        <div class="chart-card chart-card--full">
+          <div class="chart-card-header">
+            <h3>Estoque por Categoria</h3>
+            <span class="chart-badge">Atual</span>
+          </div>
+          <div class="chart-canvas-wrap chart-canvas-wrap--donut">
+            <canvas id="chart-category"></canvas>
+          </div>
+        </div>
+
+        <!-- Row 2: Leads por Mês + Preço Médio por Marca (lado a lado) -->
+        <div class="chart-card chart-card--leads">
+          <div class="chart-card-header">
+            <h3>Leads por Mês</h3>
+            <span class="chart-badge">Últimos 6 meses</span>
+          </div>
+          <div class="chart-canvas-wrap chart-canvas-wrap--tall">
+            <canvas id="chart-leads"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3>Preço Médio por Marca</h3>
+            <span class="chart-badge">Estoque Atual</span>
+          </div>
+          <div class="chart-canvas-wrap chart-canvas-wrap--tall">
+            <canvas id="chart-brands"></canvas>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Stock Table -->
+      <div class="table-card">
+        <div class="table-card-header">
+          <h3>Veículos em Destaque no Estoque</h3>
+          <a href="#estoque" class="table-link" data-nav="estoque">Ver todos →</a>
+        </div>
+        <div class="table-wrap">
+          <table class="dash-table" id="overview-table">
+            <thead>
+              <tr>
+                <th>Veículo</th>
+                <th>Categoria</th>
+                <th>Ano</th>
+                <th>KM</th>
+                <th>Preço</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="overview-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =============================================
+         SECTION: ESTOQUE COMPLETO
+         ============================================= -->
+    <section class="dash-section" id="section-estoque">
+      <div class="section-toolbar">
+        <div class="toolbar-left">
+          <div class="search-bar-dash">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+            </svg>
+            <input type="text" id="dash-search" placeholder="Buscar por marca, modelo...">
+          </div>
+        </div>
+        <div class="toolbar-right">
+          <select id="dash-filter-category" class="dash-select">
+            <option value="all">Todas Categorias</option>
+            <option value="suv">SUV</option>
+            <option value="sedan">Sedan</option>
+            <option value="picape">Picape</option>
+            <option value="hatch">Hatch</option>
+          </select>
+          <button class="btn-dash-primary" id="btn-add-vehicle-2">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+            Adicionar Veículo
+          </button>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-wrap">
+          <table class="dash-table" id="stock-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Foto</th>
+                <th>Veículo</th>
+                <th>Versão</th>
+                <th>Ano</th>
+                <th>KM</th>
+                <th>Câmbio</th>
+                <th>Preço</th>
+                <th>Destaque</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody id="stock-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION: LEADS
+         ============================================= -->
+    <section class="dash-section" id="section-leads">
+      <div class="leads-stats-row">
+        <div class="lead-stat-card">
+          <span class="lead-stat-number">47</span>
+          <span class="lead-stat-label">Total de Leads</span>
+        </div>
+        <div class="lead-stat-card">
+          <span class="lead-stat-number">12</span>
+          <span class="lead-stat-label">Este Mês</span>
+        </div>
+        <div class="lead-stat-card">
+          <span class="lead-stat-number">8</span>
+          <span class="lead-stat-label">Aguardando Retorno</span>
+        </div>
+        <div class="lead-stat-card">
+          <span class="lead-stat-number">23</span>
+          <span class="lead-stat-label">Convertidos</span>
+        </div>
+      </div>
+
+      <div class="table-card">
+        <div class="table-card-header">
+          <h3>Histórico de Contatos</h3>
+          <span class="chip-badge">Simulação de dados</span>
+        </div>
+        <div class="table-wrap">
+          <table class="dash-table" id="leads-table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <th>Interesse</th>
+                <th>Canal</th>
+                <th>Data</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="leads-table-body">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+         SECTION: ANALYTICS
+         ============================================= -->
+    <section class="dash-section" id="section-analytics">
+      <div class="analytics-grid">
+        <div class="chart-card chart-card--full">
+          <div class="chart-card-header">
+            <h3>Evolução do Estoque (Valor)</h3>
+            <span class="chart-badge">Últimos 12 meses</span>
+          </div>
+          <div class="chart-canvas-wrap chart-canvas-wrap--tall">
+            <canvas id="chart-evolution"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3>Combustível</h3>
+            <span class="chart-badge">Estoque atual</span>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="chart-fuel"></canvas>
+          </div>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-card-header">
+            <h3>Câmbio</h3>
+            <span class="chart-badge">Estoque atual</span>
+          </div>
+          <div class="chart-canvas-wrap">
+            <canvas id="chart-gearbox"></canvas>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /.main-wrapper -->
+
+  <!-- =============================================
+       MODAL: ADICIONAR / EDITAR VEÍCULO
+       ============================================= -->
+  <div class="modal-backdrop" id="vehicle-modal">
+    <div class="modal-box">
+      <div class="modal-box-header">
+        <h3 id="modal-title">Adicionar Veículo</h3>
+        <button class="modal-close" id="modal-close" aria-label="Fechar">
+          <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <form class="modal-form" id="vehicle-form">
+        <input type="hidden" id="form-id">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-brand">Marca *</label>
+            <input type="text" id="form-brand" placeholder="Ex: Toyota" required>
+          </div>
+          <div class="form-group">
+            <label for="form-model">Modelo *</label>
+            <input type="text" id="form-model" placeholder="Ex: Corolla" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="form-version">Versão *</label>
+          <input type="text" id="form-version" placeholder="Ex: 2.0 Altis Premium CVT" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-year">Ano *</label>
+            <input type="text" id="form-year" placeholder="Ex: 2022/2022" required>
+          </div>
+          <div class="form-group">
+            <label for="form-km">Quilometragem *</label>
+            <input type="text" id="form-km" placeholder="Ex: 32.000 km" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-price">Preço (R$) *</label>
+            <input type="number" id="form-price" placeholder="Ex: 139900" required>
+          </div>
+          <div class="form-group">
+            <label for="form-category">Categoria *</label>
+            <select id="form-category" required>
+              <option value="">Selecione...</option>
+              <option value="suv">SUV</option>
+              <option value="sedan">Sedan</option>
+              <option value="picape">Picape</option>
+              <option value="hatch">Hatch</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-gearbox">Câmbio</label>
+            <select id="form-gearbox">
+              <option value="Automático">Automático</option>
+              <option value="Manual">Manual</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form-fuel">Combustível</label>
+            <select id="form-fuel">
+              <option value="Flex">Flex</option>
+              <option value="Diesel">Diesel</option>
+              <option value="Gasolina">Gasolina</option>
+              <option value="Elétrico">Elétrico</option>
+              <option value="Híbrido">Híbrido</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="form-color">Cor</label>
+            <input type="text" id="form-color" placeholder="Ex: Branco Pérola">
+          </div>
+          <div class="form-group">
+            <label for="form-plate-end">Final da Placa</label>
+            <input type="text" id="form-plate-end" maxlength="1" placeholder="Ex: 5">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="form-description">Descrição</label>
+          <textarea id="form-description" rows="3" placeholder="Descreva o veículo..."></textarea>
+        </div>
+        <div class="form-group form-check">
+          <label class="check-label">
+            <input type="checkbox" id="form-featured">
+            <span class="check-custom"></span>
+            Marcar como Destaque
+          </label>
+        </div>
+        <div class="modal-actions">
+          <button type="button" class="btn-cancel" id="btn-cancel">Cancelar</button>
+          <button type="submit" class="btn-save" id="btn-save">Salvar Veículo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- =============================================
+       TOAST NOTIFICATION
+       ============================================= -->
+  <div class="dash-toast" id="dash-toast">
+    <svg class="toast-ic" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+    </svg>
+    <span id="toast-text">Ação realizada com sucesso!</span>
+  </div>
+
+  <!-- Dashboard JS -->
+  <script src="../js/dashboard.js"></script>
+</body>
+</html>

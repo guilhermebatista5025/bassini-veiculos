@@ -18,7 +18,7 @@ const vehicles = [
     image: "assets/corolla.png",
     category: "sedan",
     featured: true,
-    brandLogoUrl: "https://static.autoconf.com.br/marcas/toyota.png"
+    brandLogoUrl: "assets/brands/toyota.svg"
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const vehicles = [
     image: "assets/compass.png",
     category: "suv",
     featured: true,
-    brandLogoUrl: "https://static.autoconf.com.br/marcas/jeep.png"
+    brandLogoUrl: "assets/brands/jeep.svg"
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ const vehicles = [
     image: "assets/hilux.png",
     category: "picape",
     featured: true,
-    brandLogoUrl: "https://static.autoconf.com.br/marcas/toyota.png"
+    brandLogoUrl: "assets/brands/toyota.svg"
   }
 
 ];
@@ -66,6 +66,10 @@ const WHATSAPP_NUMBER = "5527999999999"; // Linhares, ES WhatsApp
    APP INITIALIZATION & DYNAMIC RENDERING
    ========================================================================== */
 document.addEventListener("DOMContentLoaded", () => {
+  // Detect if we are inside a subdirectory (e.g., /pages/)
+  const isSubPage = window.location.pathname.includes("/pages/");
+  const getImagePath = (path) => isSubPage ? `../${path}` : path;
+
   // Navigation elements
   const header = document.querySelector(".header");
   const navMenu = document.getElementById("nav-menu");
@@ -96,6 +100,9 @@ document.addEventListener("DOMContentLoaded", () => {
   let activeCategory = "all";
   let activeBrandFilter = "";
   let activeSearchQuery = "";
+  let activeGearbox = "all";
+  let activeFuel = "all";
+  let activeSort = "default";
 
   /* ------------------------------------------------------------------------
      1. MOBILE NAVIGATION & MENU DRAWER
@@ -188,17 +195,119 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Sort and Filter Drawer dropdown toggles
+  const btnSortToggle = document.getElementById("btn-sort-toggle");
+  const sortDropdown = document.getElementById("sort-dropdown");
+  const btnFilterToggle = document.getElementById("btn-filter-toggle");
+  const filterDrawer = document.getElementById("filter-drawer");
+  const btnClearFilters = document.getElementById("btn-clear-filters");
+
+  if (btnSortToggle && sortDropdown) {
+    btnSortToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      sortDropdown.classList.toggle("active");
+    });
+  }
+
+  document.addEventListener("click", () => {
+    if (sortDropdown) sortDropdown.classList.remove("active");
+  });
+
+  if (btnFilterToggle && filterDrawer) {
+    btnFilterToggle.addEventListener("click", () => {
+      filterDrawer.classList.toggle("active");
+      btnFilterToggle.classList.toggle("active");
+    });
+  }
+
+  const sortOptions = document.querySelectorAll(".sort-option");
+  if (sortOptions && sortOptions.length > 0) {
+    sortOptions.forEach(opt => {
+      opt.addEventListener("click", () => {
+        sortOptions.forEach(o => o.classList.remove("active"));
+        opt.classList.add("active");
+        activeSort = opt.dataset.sort;
+        
+        if (btnSortToggle) {
+          const arrowSvg = `<svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h13M3 10h9M3 16h6M19 8v12M16 17l3 3 3-3"></path></svg>`;
+          if (activeSort === "default") {
+            btnSortToggle.innerHTML = `Ordenar por ${arrowSvg}`;
+          } else {
+            btnSortToggle.innerHTML = `${opt.textContent} ${arrowSvg}`;
+          }
+        }
+        
+        renderStock();
+      });
+    });
+  }
+
+  const filterBtnOptions = document.querySelectorAll(".filter-btn-option");
+  if (filterBtnOptions && filterBtnOptions.length > 0) {
+    filterBtnOptions.forEach(opt => {
+      opt.addEventListener("click", () => {
+        const filterType = opt.dataset.filterType;
+        const value = opt.dataset.value;
+        
+        document.querySelectorAll(`.filter-btn-option[data-filter-type="${filterType}"]`).forEach(o => {
+          o.classList.remove("active");
+        });
+        opt.classList.add("active");
+        
+        if (filterType === "category") {
+          activeCategory = value;
+        } else if (filterType === "gearbox") {
+          activeGearbox = value;
+        } else if (filterType === "fuel") {
+          activeFuel = value;
+        }
+        
+        renderStock();
+      });
+    });
+  }
+
+  if (btnClearFilters) {
+    btnClearFilters.addEventListener("click", () => {
+      resetAllFilters();
+    });
+  }
+
   function resetAllFilters() {
     activeCategory = "all";
     activeBrandFilter = "";
     activeSearchQuery = "";
+    activeGearbox = "all";
+    activeFuel = "all";
+    activeSort = "default";
     
     if (searchInput) searchInput.value = "";
     
-    filterTags.forEach(t => t.classList.remove("active"));
-    if (filterTags[0]) filterTags[0].classList.add("active");
+    // Reset sort options
+    if (sortOptions && sortOptions.length > 0) {
+      sortOptions.forEach(o => o.classList.remove("active"));
+      if (sortOptions[0]) sortOptions[0].classList.add("active");
+    }
+    if (btnSortToggle) {
+      const arrowSvg = `<svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h13M3 10h9M3 16h6M19 8v12M16 17l3 3 3-3"></path></svg>`;
+      btnSortToggle.innerHTML = `Ordenar por ${arrowSvg}`;
+    }
+
+    // Reset drawer filter btn option active states
+    if (filterBtnOptions && filterBtnOptions.length > 0) {
+      filterBtnOptions.forEach(o => o.classList.remove("active"));
+      document.querySelectorAll('.filter-btn-option[data-value="all"]').forEach(o => o.classList.add("active"));
+    }
     
-    brandLinks.forEach(b => b.classList.remove("active"));
+    // Reset main filter tags if present (e.g. on index.html)
+    if (filterTags && filterTags.length > 0) {
+      filterTags.forEach(t => t.classList.remove("active"));
+      if (filterTags[0]) filterTags[0].classList.add("active");
+    }
+    
+    if (brandLinks && brandLinks.length > 0) {
+      brandLinks.forEach(b => b.classList.remove("active"));
+    }
     
     renderStock();
   }
@@ -212,14 +321,39 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Stock Renderer in Menelli Card Format
   function renderStock() {
-    const filtered = vehicles.filter(car => {
+    let filtered = vehicles.filter(car => {
       const matchesCategory = activeCategory === "all" || car.category === activeCategory;
       const matchesBrand = activeBrandFilter === "" || car.brand.toLowerCase() === activeBrandFilter.toLowerCase();
       const matchesSearch = car.brand.toLowerCase().includes(activeSearchQuery) ||
                             car.model.toLowerCase().includes(activeSearchQuery) ||
                             car.version.toLowerCase().includes(activeSearchQuery);
-      return matchesCategory && matchesBrand && matchesSearch;
+      
+      const matchesGearbox = activeGearbox === "all" || car.gearbox.toLowerCase() === activeGearbox;
+      const matchesFuel = activeFuel === "all" || car.fuel.toLowerCase() === activeFuel;
+      
+      return matchesCategory && matchesBrand && matchesSearch && matchesGearbox && matchesFuel;
     });
+
+    // Apply Sorting
+    if (activeSort === "price-asc") {
+      filtered.sort((a, b) => a.price - b.price);
+    } else if (activeSort === "price-desc") {
+      filtered.sort((a, b) => b.price - a.price);
+    } else if (activeSort === "year-desc") {
+      filtered.sort((a, b) => {
+        const yearA = parseInt(a.year.split("/")[1] || a.year.split("/")[0]);
+        const yearB = parseInt(b.year.split("/")[1] || b.year.split("/")[0]);
+        return yearB - yearA;
+      });
+    } else if (activeSort === "km-asc") {
+      filtered.sort((a, b) => {
+        const kmA = parseInt(a.km.replace(/\D/g, "") || 0);
+        const kmB = parseInt(b.km.replace(/\D/g, "") || 0);
+        return kmA - kmB;
+      });
+    } else {
+      filtered.sort((a, b) => a.id - b.id);
+    }
 
     carGrid.innerHTML = "";
 
@@ -243,16 +377,17 @@ document.addEventListener("DOMContentLoaded", () => {
     filtered.forEach(car => {
       const formattedPrice = car.price.toLocaleString("pt-BR", { style: "currency", currency: "BRL", maximumFractionDigits: 0 });
       const card = document.createElement("div");
-      card.className = "card-car";
+      card.className = "card-car card-car--clickable";
+      card.dataset.id = car.id;
       card.innerHTML = `
         <div class="card-header">
-          <img src="${car.image}" alt="${car.brand} ${car.model}">
+          <img src="${getImagePath(car.image)}" alt="${car.brand} ${car.model}">
           ${car.featured ? '<div class="badges"><span class="badge">Destaque</span></div>' : ''}
         </div>
         <div class="card-body">
           <div class="car-description">
             <div class="brand-logo-badge">
-              ${car.brandLogoUrl ? `<img src="${car.brandLogoUrl}" alt="${car.brand}" style="width:100%;height:100%;object-fit:contain;">` : ''}
+              ${car.brandLogoUrl ? `<img src="${getImagePath(car.brandLogoUrl)}" alt="${car.brand}" style="width:100%;height:100%;object-fit:contain;">` : ''}
             </div>
             <div class="col p-0">
               <h3>${car.brand} <span class="fw-bold">${car.model}</span></h3>
@@ -287,11 +422,23 @@ document.addEventListener("DOMContentLoaded", () => {
       carGrid.appendChild(card);
     });
 
-    // Modal click bindings
+    // Details page click bindings — both the card and the "Ver mais" button navigate
+    document.querySelectorAll(".card-car--clickable").forEach(card => {
+      card.addEventListener("click", (e) => {
+        // Prevent double-navigation if the button itself was the click target
+        if (e.target.closest(".open-details-btn")) return;
+        const carId = parseInt(card.dataset.id);
+        const detailsPageUrl = isSubPage ? `detalhes.html?id=${carId}` : `pages/detalhes.html?id=${carId}`;
+        window.location.href = detailsPageUrl;
+      });
+    });
+
     document.querySelectorAll(".open-details-btn").forEach(btn => {
-      btn.addEventListener("click", () => {
+      btn.addEventListener("click", (e) => {
+        e.stopPropagation();
         const carId = parseInt(btn.dataset.id);
-        openDetailsModal(carId);
+        const detailsPageUrl = isSubPage ? `detalhes.html?id=${carId}` : `pages/detalhes.html?id=${carId}`;
+        window.location.href = detailsPageUrl;
       });
     });
   }
@@ -315,7 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </button>
       <div class="modal-grid">
         <div class="modal-gallery">
-          <img class="modal-gallery-img" src="${car.image}" alt="${car.brand} ${car.model}">
+          <img class="modal-gallery-img" src="${getImagePath(car.image)}" alt="${car.brand} ${car.model}">
         </div>
         <div class="modal-content">
           <div class="modal-header">
