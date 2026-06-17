@@ -1,7 +1,7 @@
 /* ==========================================================================
    VEHICLES DATA (SIMULATION OF DATABASE)
    ========================================================================== */
-const vehicles = [
+const defaultVehicles = [
   {
     id: 1,
     brand: "Toyota",
@@ -56,8 +56,9 @@ const vehicles = [
     featured: true,
     brandLogoUrl: "assets/brands/toyota.svg"
   }
-
 ];
+
+let vehicles = [];
 
 // WhatsApp Configs
 const WHATSAPP_NUMBER = "5527999999999"; // Linhares, ES WhatsApp
@@ -68,7 +69,12 @@ const WHATSAPP_NUMBER = "5527999999999"; // Linhares, ES WhatsApp
 document.addEventListener("DOMContentLoaded", () => {
   // Detect if we are inside a subdirectory (e.g., /pages/)
   const isSubPage = window.location.pathname.includes("/pages/");
-  const getImagePath = (path) => isSubPage ? `../${path}` : path;
+  const getImagePath = (path) => {
+    if (!path) return "";
+    // Remove any leading '../' or '/' to normalize the path
+    const cleaned = path.replace(/^(\.\.\/|\/)/, "");
+    return isSubPage ? `../${cleaned}` : cleaned;
+  };
 
   // Navigation elements
   const header = document.querySelector(".header");
@@ -125,7 +131,22 @@ document.addEventListener("DOMContentLoaded", () => {
   /* ------------------------------------------------------------------------
      2. STOCK RENDERING & FILTERS
      ------------------------------------------------------------------------ */
-  renderStock();
+  async function fetchVehicles() {
+    try {
+      const response = await fetch("http://localhost:3000/api/veiculos");
+      if (response.ok) {
+        vehicles = await response.json();
+      } else {
+        vehicles = defaultVehicles;
+      }
+    } catch (err) {
+      console.error("Erro ao buscar veículos da API, usando padrão local:", err);
+      vehicles = defaultVehicles;
+    }
+    renderStock();
+  }
+
+  fetchVehicles();
 
   // Category Filters (Capsules)
   filterTags.forEach(tag => {
@@ -178,8 +199,10 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Reset category pills back to 'all' to prevent collision
         activeCategory = "all";
-        filterTags.forEach(t => t.classList.remove("active"));
-        filterTags[0].classList.add("active"); // 'Todos' tag
+        if (filterTags && filterTags.length > 0) {
+          filterTags.forEach(t => t.classList.remove("active"));
+          if (filterTags[0]) filterTags[0].classList.add("active"); // 'Todos' tag
+        }
       }
       
       renderStock();
@@ -193,6 +216,27 @@ document.addEventListener("DOMContentLoaded", () => {
       resetAllFilters();
       scrollToStock();
     });
+  }
+
+  // Get Brand from URL parameters if any (e.g. estoque.html?brand=Toyota)
+  const urlParams = new URLSearchParams(window.location.search);
+  const urlBrand = urlParams.get("brand");
+  if (urlBrand) {
+    const brandLink = Array.from(brandLinks).find(b => b.dataset.brand.toLowerCase() === urlBrand.toLowerCase());
+    if (brandLink) {
+      brandLinks.forEach(b => b.classList.remove("active"));
+      brandLink.classList.add("active");
+      activeBrandFilter = brandLink.dataset.brand;
+      
+      // Reset category pills back to 'all' to prevent collision
+      activeCategory = "all";
+      if (filterTags && filterTags.length > 0) {
+        filterTags.forEach(t => t.classList.remove("active"));
+        if (filterTags[0]) filterTags[0].classList.add("active"); // 'Todos' tag
+      }
+      
+      renderStock();
+    }
   }
 
   // Sort and Filter Drawer dropdown toggles
@@ -322,6 +366,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // Stock Renderer in Menelli Card Format
   function renderStock() {
     let filtered = vehicles.filter(car => {
+      // Se estiver na index (página principal), mostra apenas veículos em destaque (featured)
+      if (!isSubPage && !car.featured) return false;
+
       const matchesCategory = activeCategory === "all" || car.category === activeCategory;
       const matchesBrand = activeBrandFilter === "" || car.brand.toLowerCase() === activeBrandFilter.toLowerCase();
       const matchesSearch = car.brand.toLowerCase().includes(activeSearchQuery) ||
@@ -559,6 +606,21 @@ document.addEventListener("DOMContentLoaded", () => {
       
       submitBtn.disabled = true;
       submitBtn.innerHTML = "Enviando...";
+
+      // Enviar lead para o backend
+      fetch("http://localhost:3000/api/leads", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome: name,
+          telefone: phone,
+          email: email,
+          interesse: "Contato Geral",
+          canal: "formulario",
+          status: "Novo",
+          mensagem: message
+        })
+      }).catch(err => console.error("Erro ao enviar lead para o servidor:", err));
 
       setTimeout(() => {
         submitBtn.disabled = false;

@@ -280,6 +280,10 @@
             <option value="picape">Picape</option>
             <option value="hatch">Hatch</option>
           </select>
+          <button class="btn-dash-success" id="btn-save-changes">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M5 13l4 4L19 7"/></svg>
+            Salvar Mudanças
+          </button>
           <button class="btn-dash-primary" id="btn-add-vehicle-2">
             <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
             Adicionar Veículo
@@ -415,13 +419,33 @@
       <form class="modal-form" id="vehicle-form">
         <input type="hidden" id="form-id">
         <div class="form-row">
-          <div class="form-group">
+          <div class="form-group" id="brand-group">
             <label for="form-brand">Marca *</label>
-            <input type="text" id="form-brand" placeholder="Ex: Toyota" required>
+            <select id="form-brand" required>
+              <option value="">Selecione...</option>
+            </select>
+            <div id="brand-custom-wrapper" style="display: none; align-items: center; gap: 8px; margin-top: 6px;">
+              <input type="text" id="form-brand-custom" placeholder="Digite a nova marca" style="flex: 1; margin: 0;">
+              <button type="button" id="btn-brand-back" class="action-btn" title="Voltar para seleção" style="flex-shrink: 0; width: 36px; height: 36px;">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px;">
+                  <path d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/>
+                </svg>
+              </button>
+            </div>
           </div>
-          <div class="form-group">
+          <div class="form-group" id="model-group">
             <label for="form-model">Modelo *</label>
-            <input type="text" id="form-model" placeholder="Ex: Corolla" required>
+            <select id="form-model" required disabled>
+              <option value="">Selecione a marca primeiro...</option>
+            </select>
+            <div id="model-custom-wrapper" style="display: none; align-items: center; gap: 8px; margin-top: 6px;">
+              <input type="text" id="form-model-custom" placeholder="Digite o novo modelo" style="flex: 1; margin: 0;">
+              <button type="button" id="btn-model-back" class="action-btn" title="Voltar para seleção" style="flex-shrink: 0; width: 36px; height: 36px;">
+                <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5" style="width: 16px; height: 16px;">
+                  <path d="M9 15L3 9m0 0l6-6M3 9h12a6 6 0 010 12h-3"/>
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -440,8 +464,8 @@
         </div>
         <div class="form-row">
           <div class="form-group">
-            <label for="form-price">Preço (R$) *</label>
-            <input type="number" id="form-price" placeholder="Ex: 139900" required>
+            <label for="form-price">Preço *</label>
+            <input type="text" id="form-price" placeholder="Ex: R$ 139.900" required>
           </div>
           <div class="form-group">
             <label for="form-category">Categoria *</label>

@@ -5,72 +5,43 @@
 /* -------------------------------------------------------------------------
    VEHICLES DATA (shared with main site, extended for dashboard)
    ------------------------------------------------------------------------- */
-let vehicles = JSON.parse(localStorage.getItem('bassini_vehicles')) || [
-  {
-    id: 1,
-    brand: "Toyota", model: "Corolla",
-    version: "2.0 Altis Premium CVT",
-    year: "2022/2022", km: "32.000 km",
-    gearbox: "Automático", fuel: "Flex",
-    color: "Branco Pérola", plateEnd: "5",
-    description: "Veículo em estado de zero quilômetro. Único dono, com todas as revisões na Toyota.",
-    price: 139900, image: "../assets/corolla.png",
-    category: "sedan", featured: true,
-    status: "disponivel",
-    brandLogoUrl: "../assets/brands/toyota.svg"
-  },
-  {
-    id: 2,
-    brand: "Jeep", model: "Compass",
-    version: "2.0 TD350 Limited 4x4",
-    year: "2021/2022", km: "45.000 km",
-    gearbox: "Automático", fuel: "Diesel",
-    color: "Cinza Granite", plateEnd: "8",
-    description: "Versão Limited com motor TD350 Turbodiesel, teto solar panorâmico e som Beats.",
-    price: 168900, image: "../assets/compass.png",
-    category: "suv", featured: true,
-    status: "disponivel",
-    brandLogoUrl: "../assets/brands/jeep.svg"
-  },
-  {
-    id: 3,
-    brand: "Toyota", model: "Hilux",
-    version: "2.8 SRX 4x4 Turbodiesel",
-    year: "2020/2020", km: "68.000 km",
-    gearbox: "Automático", fuel: "Diesel",
-    color: "Prata Metalizado", plateEnd: "3",
-    description: "Versão SRX topo de linha com motor 2.8 turbodiesel e som JBL.",
-    price: 219900, image: "../assets/hilux.png",
-    category: "picape", featured: true,
-    status: "disponivel",
-    brandLogoUrl: "../assets/brands/toyota.svg"
-  }
-];
+let vehicles = [];
+let leadsData = [];
 
-/* Mock leads data */
-const leadsData = [
-  { name: "Carlos Mendes", phone: "(27) 99845-2211", interest: "Toyota Corolla", channel: "whatsapp", date: "12/06/2026", status: "Novo" },
-  { name: "Fernanda Lima", phone: "(27) 98712-3344", interest: "Jeep Compass", channel: "formulario", date: "11/06/2026", status: "Contatado" },
-  { name: "Roberto Alves", phone: "(27) 99231-8877", interest: "Toyota Hilux", channel: "whatsapp", date: "10/06/2026", status: "Convertido" },
-  { name: "Mariana Costa", phone: "(28) 99012-5566", interest: "Qualquer SUV", channel: "telefone", date: "09/06/2026", status: "Aguardando" },
-  { name: "André Souza", phone: "(27) 99876-4433", interest: "Toyota Corolla", channel: "whatsapp", date: "08/06/2026", status: "Novo" },
-  { name: "Patrícia Ramos", phone: "(27) 98543-1122", interest: "Jeep Compass", channel: "formulario", date: "07/06/2026", status: "Convertido" },
-  { name: "Lucas Ferreira", phone: "(27) 99654-3321", interest: "Toyota Hilux", channel: "whatsapp", date: "06/06/2026", status: "Contatado" },
-  { name: "Juliana Martins", phone: "(27) 99123-7788", interest: "Sedan premium", channel: "telefone", date: "05/06/2026", status: "Aguardando" },
-];
+function getImagePath(path) {
+  if (!path) return "";
+  const cleaned = path.replace(/^(\.\.\/|\/)/, "");
+  return `../${cleaned}`;
+}
 
 /* ==========================================================================
    INIT
    ========================================================================== */
-document.addEventListener('DOMContentLoaded', () => {
-  setCurrentDate();
-  setupNavigation();
-  setupSidebar();
-  setupModal();
+async function loadData() {
+  try {
+    const vRes = await fetch('http://localhost:3000/api/veiculos');
+    if (vRes.ok) {
+      vehicles = await vRes.json();
+    }
+    const lRes = await fetch('http://localhost:3000/api/leads');
+    if (lRes.ok) {
+      leadsData = await lRes.json();
+    }
+  } catch (err) {
+    console.error("Erro ao buscar dados do servidor:", err);
+  }
   renderOverview();
   renderStockTable();
   renderLeadsTable();
   renderAnalyticsCharts();
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  setCurrentDate();
+  setupNavigation();
+  setupSidebar();
+  setupModal();
+  await loadData();
 });
 
 /* ==========================================================================
@@ -169,7 +140,7 @@ function renderOverview() {
       <tr>
         <td>
           <div class="vehicle-name-cell">
-            <img src="${car.image}" alt="${car.model}" class="vehicle-thumb" onerror="this.style.display='none'">
+            <img src="${getImagePath(car.image)}" alt="${car.model}" class="vehicle-thumb" onerror="this.style.display='none'">
             <div class="vehicle-name-text">
               <strong>${car.brand} ${car.model}</strong>
               <span>${car.version}</span>
@@ -283,7 +254,7 @@ function renderStockTable() {
       <tr>
         <td style="color:var(--text-muted);font-size:11px">#${car.id}</td>
         <td>
-          <img src="${car.image}" alt="${car.model}" class="vehicle-thumb" onerror="this.style.display='none'">
+          <img src="${getImagePath(car.image)}" alt="${car.model}" class="vehicle-thumb" onerror="this.style.display='none'">
         </td>
         <td>
           <div class="vehicle-name-text">
@@ -333,6 +304,23 @@ function renderStockTable() {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('dash-search')?.addEventListener('input', renderStockTable);
   document.getElementById('dash-filter-category')?.addEventListener('change', renderStockTable);
+  
+  // Botão Salvar Mudanças
+  document.getElementById('btn-save-changes')?.addEventListener('click', async () => {
+    try {
+      const response = await fetch('http://localhost:3000/api/save-changes', {
+        method: 'POST'
+      });
+      if (response.ok) {
+        showToast('Mudanças salvas e site atualizado!');
+      } else {
+        showToast('Erro ao salvar mudanças.');
+      }
+    } catch (err) {
+      console.error("Erro ao salvar mudanças:", err);
+      showToast('Erro ao conectar ao servidor.');
+    }
+  });
 });
 
 /* ==========================================================================
@@ -347,13 +335,19 @@ function renderLeadsTable() {
       'Convertido': '#4ade80', 'Aguardando': '#f87171'
     }[lead.status] || '#8b949e';
 
+    const name = lead.nome || lead.name || '—';
+    const phone = lead.telefone || lead.phone || '—';
+    const interest = lead.interesse || lead.interest || '—';
+    const channel = lead.canal || lead.channel || '—';
+    const date = lead.criado_em ? new Date(lead.criado_em).toLocaleDateString('pt-BR') : (lead.date || '—');
+
     tbody.insertAdjacentHTML('beforeend', `
       <tr>
-        <td><strong style="color:#e6edf3">${lead.name}</strong></td>
-        <td>${lead.phone}</td>
-        <td>${lead.interest}</td>
-        <td><span class="channel-badge ${lead.channel}">${channelLabel(lead.channel)}</span></td>
-        <td style="color:var(--text-muted)">${lead.date}</td>
+        <td><strong style="color:#e6edf3">${name}</strong></td>
+        <td>${phone}</td>
+        <td>${interest}</td>
+        <td><span class="channel-badge ${channel}">${channelLabel(channel)}</span></td>
+        <td style="color:var(--text-muted)">${date}</td>
         <td><span style="color:${statusColor};font-weight:600;font-size:12px">${lead.status}</span></td>
       </tr>
     `);
@@ -363,7 +357,7 @@ function renderLeadsTable() {
 /* ==========================================================================
    ANALYTICS CHARTS
    ========================================================================== */
-const analyticsChartsRendered = { evolution: false, fuel: false, gearbox: false };
+const analyticsChartsRendered = { evolution: false, fuel: false, gearbox: false, category: false };
 
 function renderAnalyticsCharts() {
   if (!analyticsChartsRendered.evolution) {
@@ -380,6 +374,23 @@ function renderAnalyticsCharts() {
       }]
     }, lineOptions('R$ mil'));
     analyticsChartsRendered.evolution = true;
+  }
+
+  if (!analyticsChartsRendered.category) {
+    const catCounts = {};
+    vehicles.forEach(v => {
+      const label = catLabel(v.category);
+      catCounts[label] = (catCounts[label] || 0) + 1;
+    });
+    renderChart('chart-category', 'doughnut', {
+      labels: Object.keys(catCounts),
+      datasets: [{
+        data: Object.values(catCounts),
+        backgroundColor: ['#3b82f6', '#f59e0b', '#10b981', '#8b5cf6'],
+        borderWidth: 0, hoverOffset: 8
+      }]
+    }, { plugins: { legend: { position: 'bottom', labels: { color: '#8b949e', font: { size: 11 }, boxWidth: 10, padding: 12 } } }, cutout: '65%' });
+    analyticsChartsRendered.category = true;
   }
 
   if (!analyticsChartsRendered.fuel) {
@@ -414,6 +425,136 @@ function renderAnalyticsCharts() {
 /* ==========================================================================
    MODAL: ADD / EDIT VEHICLE
    ========================================================================== */
+/* ==========================================================================
+   MODAL POPULATING HELPERS
+   ========================================================================== */
+const SITE_BRANDS = [
+  "Audi", "BMW", "Chevrolet", "Fiat", "Ford", "Honda", "Hyundai", 
+  "Jeep", "Mercedes-Benz", "Mitsubishi", "Nissan", "Renault", "Toyota", "Volkswagen"
+];
+
+function populateBrandSelect(selectedBrandValue = '') {
+  const brandSelect = document.getElementById('form-brand');
+  const brandCustomInput = document.getElementById('form-brand-custom');
+  const brandCustomWrapper = document.getElementById('brand-custom-wrapper');
+  const modelSelect = document.getElementById('form-model');
+  const modelCustomInput = document.getElementById('form-model-custom');
+  const modelCustomWrapper = document.getElementById('model-custom-wrapper');
+
+  if (!brandSelect) return;
+
+  const dbBrands = vehicles.map(v => v.brand);
+  
+  const uniqueBrandsMap = new Map();
+  SITE_BRANDS.forEach(b => uniqueBrandsMap.set(b.toLowerCase(), b));
+  dbBrands.forEach(b => {
+    if (b && b.trim()) {
+      uniqueBrandsMap.set(b.toLowerCase(), b.trim());
+    }
+  });
+
+  const sortedBrands = Array.from(uniqueBrandsMap.values()).sort((a, b) => a.localeCompare(b));
+
+  brandSelect.innerHTML = '<option value="">Selecione...</option>';
+  sortedBrands.forEach(brand => {
+    brandSelect.insertAdjacentHTML('beforeend', `<option value="${brand}">${brand}</option>`);
+  });
+  brandSelect.insertAdjacentHTML('beforeend', `<option value="__NEW_BRAND__" style="color: #60a5fa; font-weight: 600;">+ Adicionar nova marca...</option>`);
+
+  brandCustomWrapper.style.display = 'none';
+  brandCustomInput.value = '';
+  brandCustomInput.required = false;
+  brandSelect.style.display = 'block';
+  brandSelect.required = true;
+
+  modelCustomWrapper.style.display = 'none';
+  modelCustomInput.value = '';
+  modelCustomInput.required = false;
+  modelSelect.style.display = 'block';
+  modelSelect.required = true;
+
+  if (selectedBrandValue) {
+    const hasBrand = sortedBrands.some(b => b.toLowerCase() === selectedBrandValue.toLowerCase());
+    if (hasBrand) {
+      const matchedBrand = uniqueBrandsMap.get(selectedBrandValue.toLowerCase());
+      brandSelect.value = matchedBrand;
+      populateModelSelect(matchedBrand);
+    } else {
+      brandSelect.value = '__NEW_BRAND__';
+      brandSelect.style.display = 'none';
+      brandSelect.required = false;
+      brandCustomWrapper.style.display = 'flex';
+      brandCustomInput.value = selectedBrandValue;
+      brandCustomInput.required = true;
+
+      modelSelect.style.display = 'none';
+      modelSelect.required = false;
+      modelCustomWrapper.style.display = 'flex';
+      modelCustomInput.required = true;
+    }
+  } else {
+    brandSelect.value = '';
+    modelSelect.innerHTML = '<option value="">Selecione a marca primeiro...</option>';
+    modelSelect.disabled = true;
+  }
+}
+
+function populateModelSelect(brandName, selectedModelValue = '') {
+  const modelSelect = document.getElementById('form-model');
+  const modelCustomInput = document.getElementById('form-model-custom');
+  const modelCustomWrapper = document.getElementById('model-custom-wrapper');
+  if (!modelSelect) return;
+
+  if (!brandName || brandName === '__NEW_BRAND__') {
+    modelSelect.innerHTML = '<option value="">Selecione a marca primeiro...</option>';
+    modelSelect.disabled = true;
+    modelSelect.style.display = 'block';
+    modelSelect.required = true;
+    modelCustomWrapper.style.display = 'none';
+    modelCustomInput.required = false;
+    return;
+  }
+
+  const models = [...new Set(
+    vehicles
+      .filter(v => v.brand && v.brand.toLowerCase() === brandName.toLowerCase())
+      .map(v => v.model)
+  )].sort((a, b) => a.localeCompare(b));
+
+  modelSelect.innerHTML = '<option value="">Selecione...</option>';
+  models.forEach(model => {
+    modelSelect.insertAdjacentHTML('beforeend', `<option value="${model}">${model}</option>`);
+  });
+  modelSelect.insertAdjacentHTML('beforeend', `<option value="__NEW_MODEL__" style="color: #60a5fa; font-weight: 600;">+ Adicionar novo modelo...</option>`);
+  modelSelect.disabled = false;
+
+  modelSelect.style.display = 'block';
+  modelSelect.required = true;
+  modelCustomWrapper.style.display = 'none';
+  modelCustomInput.value = '';
+  modelCustomInput.required = false;
+
+  if (selectedModelValue) {
+    const hasModel = models.some(m => m.toLowerCase() === selectedModelValue.toLowerCase());
+    if (hasModel) {
+      const matchedModel = models.find(m => m.toLowerCase() === selectedModelValue.toLowerCase());
+      modelSelect.value = matchedModel;
+    } else {
+      modelSelect.value = '__NEW_MODEL__';
+      modelSelect.style.display = 'none';
+      modelSelect.required = false;
+      modelCustomWrapper.style.display = 'flex';
+      modelCustomInput.value = selectedModelValue;
+      modelCustomInput.required = true;
+    }
+  } else {
+    modelSelect.value = '';
+  }
+}
+
+/* ==========================================================================
+   MODAL: ADD / EDIT VEHICLE
+   ========================================================================== */
 function setupModal() {
   const modal     = document.getElementById('vehicle-modal');
   const form      = document.getElementById('vehicle-form');
@@ -425,6 +566,7 @@ function setupModal() {
     document.getElementById('btn-save').textContent = 'Salvar Veículo';
     form.reset();
     document.getElementById('form-id').value = '';
+    populateBrandSelect();
     modal.classList.add('open');
   };
 
@@ -434,16 +576,133 @@ function setupModal() {
   cancelBtn?.addEventListener('click', () => modal.classList.remove('open'));
   modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.remove('open'); });
 
-  form.addEventListener('submit', (e) => {
+  // Price input dynamic currency formatting
+  document.getElementById('form-price')?.addEventListener('input', (e) => {
+    let value = e.target.value;
+    let cleanValue = value.replace(/\D/g, "");
+    if (!cleanValue) {
+      e.target.value = "";
+      return;
+    }
+    let number = parseInt(cleanValue, 10);
+    e.target.value = "R$ " + number.toLocaleString('pt-BR');
+  });
+
+  // Change Brand handler
+  document.getElementById('form-brand')?.addEventListener('change', (e) => {
+    const val = e.target.value;
+    const brandCustomWrapper = document.getElementById('brand-custom-wrapper');
+    const brandCustomInput = document.getElementById('form-brand-custom');
+    const modelSelect = document.getElementById('form-model');
+    const modelCustomWrapper = document.getElementById('model-custom-wrapper');
+    const modelCustomInput = document.getElementById('form-model-custom');
+
+    if (val === '__NEW_BRAND__') {
+      e.target.style.display = 'none';
+      e.target.required = false;
+      brandCustomWrapper.style.display = 'flex';
+      brandCustomInput.required = true;
+      brandCustomInput.value = '';
+      brandCustomInput.focus();
+
+      modelSelect.style.display = 'none';
+      modelSelect.required = false;
+      modelCustomWrapper.style.display = 'flex';
+      modelCustomInput.required = true;
+      modelCustomInput.value = '';
+    } else {
+      populateModelSelect(val);
+    }
+  });
+
+  // Change Model handler
+  document.getElementById('form-model')?.addEventListener('change', (e) => {
+    const val = e.target.value;
+    const modelCustomWrapper = document.getElementById('model-custom-wrapper');
+    const modelCustomInput = document.getElementById('form-model-custom');
+
+    if (val === '__NEW_MODEL__') {
+      e.target.style.display = 'none';
+      e.target.required = false;
+      modelCustomWrapper.style.display = 'flex';
+      modelCustomInput.required = true;
+      modelCustomInput.value = '';
+      modelCustomInput.focus();
+    }
+  });
+
+  // Back button for custom brand
+  document.getElementById('btn-brand-back')?.addEventListener('click', () => {
+    const brandSelect = document.getElementById('form-brand');
+    const brandCustomInput = document.getElementById('form-brand-custom');
+    const brandCustomWrapper = document.getElementById('brand-custom-wrapper');
+    const modelSelect = document.getElementById('form-model');
+    const modelCustomInput = document.getElementById('form-model-custom');
+    const modelCustomWrapper = document.getElementById('model-custom-wrapper');
+
+    brandSelect.style.display = 'block';
+    brandSelect.required = true;
+    brandSelect.value = '';
+    
+    brandCustomInput.value = '';
+    brandCustomInput.required = false;
+    brandCustomWrapper.style.display = 'none';
+
+    modelSelect.style.display = 'block';
+    modelSelect.required = true;
+    modelSelect.innerHTML = '<option value="">Selecione a marca primeiro...</option>';
+    modelSelect.disabled = true;
+
+    modelCustomInput.value = '';
+    modelCustomInput.required = false;
+    modelCustomWrapper.style.display = 'none';
+  });
+
+  // Back button for custom model
+  document.getElementById('btn-model-back')?.addEventListener('click', () => {
+    const modelSelect = document.getElementById('form-model');
+    const modelCustomInput = document.getElementById('form-model-custom');
+    const modelCustomWrapper = document.getElementById('model-custom-wrapper');
+
+    modelSelect.style.display = 'block';
+    modelSelect.required = true;
+    modelSelect.value = '';
+    
+    modelCustomInput.value = '';
+    modelCustomInput.required = false;
+    modelCustomWrapper.style.display = 'none';
+  });
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     const id = document.getElementById('form-id').value;
+
+    const getBrandValue = () => {
+      const select = document.getElementById('form-brand');
+      if (select && select.style.display !== 'none') {
+        return select.value.trim();
+      }
+      return document.getElementById('form-brand-custom').value.trim();
+    };
+
+    const getModelValue = () => {
+      const select = document.getElementById('form-model');
+      if (select && select.style.display !== 'none') {
+        return select.value.trim();
+      }
+      return document.getElementById('form-model-custom').value.trim();
+    };
+
+    const finalBrand = getBrandValue();
+    const finalModel = getModelValue();
+
     const carData = {
-      brand:       document.getElementById('form-brand').value.trim(),
-      model:       document.getElementById('form-model').value.trim(),
+      brand:       finalBrand,
+      model:       finalModel,
       version:     document.getElementById('form-version').value.trim(),
       year:        document.getElementById('form-year').value.trim(),
       km:          document.getElementById('form-km').value.trim(),
-      price:       parseFloat(document.getElementById('form-price').value),
+      price:       parseFloat(document.getElementById('form-price').value.replace(/[^\d]/g, '')) || 0,
       category:    document.getElementById('form-category').value,
       gearbox:     document.getElementById('form-gearbox').value,
       fuel:        document.getElementById('form-fuel').value,
@@ -452,26 +711,39 @@ function setupModal() {
       description: document.getElementById('form-description').value.trim(),
       featured:    document.getElementById('form-featured').checked,
       status:      'disponivel',
-      image:       '../assets/corolla.png', // placeholder
-      brandLogoUrl:`../assets/brands/${document.getElementById('form-brand').value.toLowerCase()}.svg`
+      image:       'assets/corolla.png', // cleaned placeholder (no ../ prefix)
+      brandLogoUrl: `assets/brands/${finalBrand.toLowerCase()}.svg`
     };
 
-    if (id) {
-      // Edit
-      const idx = vehicles.findIndex(v => v.id === parseInt(id));
-      if (idx !== -1) vehicles[idx] = { ...vehicles[idx], ...carData };
-      showToast('Veículo atualizado com sucesso!');
-    } else {
-      // Add
-      const newId = Math.max(...vehicles.map(v => v.id), 0) + 1;
-      vehicles.push({ id: newId, ...carData });
-      showToast('Veículo adicionado ao estoque!');
+    try {
+      if (id) {
+        // Edit
+        const response = await fetch(`http://localhost:3000/api/veiculos/${id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(carData)
+        });
+        if (response.ok) {
+          showToast('Veículo atualizado com sucesso!');
+        }
+      } else {
+        // Add
+        const response = await fetch('http://localhost:3000/api/veiculos', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(carData)
+        });
+        if (response.ok) {
+          showToast('Veículo adicionado ao estoque!');
+        }
+      }
+    } catch (err) {
+      console.error("Erro ao salvar veículo no servidor:", err);
+      showToast('Erro ao salvar veículo no servidor.');
     }
 
-    saveVehicles();
     modal.classList.remove('open');
-    renderOverview();
-    renderStockTable();
+    await loadData();
   });
 }
 
@@ -482,12 +754,14 @@ function openEditModal(id) {
   document.getElementById('modal-title').textContent = 'Editar Veículo';
   document.getElementById('btn-save').textContent = 'Salvar Alterações';
   document.getElementById('form-id').value      = car.id;
-  document.getElementById('form-brand').value   = car.brand;
-  document.getElementById('form-model').value   = car.model;
+  
+  populateBrandSelect(car.brand);
+  populateModelSelect(car.brand, car.model);
+
   document.getElementById('form-version').value = car.version;
   document.getElementById('form-year').value    = car.year;
   document.getElementById('form-km').value      = car.km;
-  document.getElementById('form-price').value   = car.price;
+  document.getElementById('form-price').value   = car.price ? "R$ " + car.price.toLocaleString('pt-BR') : "";
   document.getElementById('form-category').value= car.category;
   document.getElementById('form-gearbox').value = car.gearbox;
   document.getElementById('form-fuel').value    = car.fuel;
@@ -499,26 +773,43 @@ function openEditModal(id) {
   document.getElementById('vehicle-modal').classList.add('open');
 }
 
-function deleteVehicle(id) {
+async function deleteVehicle(id) {
   if (!confirm('Deseja realmente excluir este veículo do estoque?')) return;
-  vehicles = vehicles.filter(v => v.id !== id);
-  saveVehicles();
-  renderOverview();
-  renderStockTable();
-  showToast('Veículo removido do estoque.');
+  try {
+    const response = await fetch(`http://localhost:3000/api/veiculos/${id}`, {
+      method: 'DELETE'
+    });
+    if (response.ok) {
+      showToast('Veículo removido do estoque.');
+      await loadData();
+    }
+  } catch (err) {
+    console.error("Erro ao excluir veículo:", err);
+    showToast('Erro ao excluir veículo.');
+  }
 }
 
-function toggleFeatured(id) {
+async function toggleFeatured(id) {
   const car = vehicles.find(v => v.id === id);
   if (car) {
-    car.featured = !car.featured;
-    saveVehicles();
-    renderStockTable();
+    const updatedFeatured = !car.featured;
+    try {
+      const response = await fetch(`http://localhost:3000/api/veiculos/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...car, featured: updatedFeatured })
+      });
+      if (response.ok) {
+        await loadData();
+      }
+    } catch (err) {
+      console.error("Erro ao alterar destaque:", err);
+    }
   }
 }
 
 function saveVehicles() {
-  localStorage.setItem('bassini_vehicles', JSON.stringify(vehicles));
+  // Mantida como vazia para evitar quebras de referência antigas
 }
 
 /* ==========================================================================

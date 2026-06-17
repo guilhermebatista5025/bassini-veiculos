@@ -670,6 +670,23 @@ html, body {
 }
 .btn-dash-primary:hover { background: #1d4ed8; }
 
+.btn-dash-success {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  background: #10b981;
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 9px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font);
+}
+.btn-dash-success:hover { background: #059669; }
+
 /* ==========================================================================
    LEADS SECTION
    ========================================================================== */
